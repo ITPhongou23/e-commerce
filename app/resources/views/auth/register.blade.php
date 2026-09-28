@@ -6,7 +6,7 @@
             @endforeach
         </div>
     @endif
-    <div class="flex min-h-[70vh] items-center justify-center px-4">
+    <div class="flex min-h-[70vh] items-center justify-center px-4 py-5">
         <div class="w-full max-w-md rounded-2xl border border-gray-200 bg-blue-400 p-8 shadow-lg">
 
             <h1 class="mb-6 text-center text-3xl font-bold text-white">
@@ -15,8 +15,6 @@
 
             <form method="POST" action="/register" class="space-y-5">
                 @csrf
-
-                {{-- Username --}}
                 <div class="flex flex-col">
                     <label for="username" class="mb-2 font-semibold text-white">
                         Username
@@ -39,7 +37,6 @@
                     @enderror
                 </div>
 
-                {{-- Email --}}
                 <div class="flex flex-col">
                     <label for="email" class="mb-2 font-semibold text-white">
                         Email
@@ -62,7 +59,6 @@
                     @enderror
                 </div>
 
-                {{-- Password --}}
                 <div class="flex flex-col">
                     <label for="password" class="mb-2 font-semibold text-white">
                         Password
@@ -84,7 +80,6 @@
                     @enderror
                 </div>
 
-                {{-- Confirm Password --}}
                 <div class="flex flex-col">
                     <label for="password_confirmation" class="mb-2 font-semibold text-white">
                         Confirm Password
@@ -100,7 +95,6 @@
                     >
                 </div>
 
-                {{-- Register button --}}
                 <button
                     type="submit"
                     class="w-full rounded-lg bg-[#a3b2bb] px-4 py-3 font-bold text-white transition hover:bg-[#8f9fa8] focus:outline-none focus:ring-2 focus:ring-white"

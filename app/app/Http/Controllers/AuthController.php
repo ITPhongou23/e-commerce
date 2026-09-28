@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function showRegister()
-    {
-        return view('register');
+    public function showregister(){
+        return view('auth.register');
+    }
+
+    public function showlogin(){
+        return view('auth.login');
     }
 
     public function get_user(){
@@ -19,36 +22,35 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
+    public function register(Request $request){
+        $request->validate([
             'name' => 'required|string|max:255|unique:users,name',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+        $User = User::create([
+            'name' =>  $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect('/login')->with(
-            'success',
-            'Register successfully! Please login.'
+            'success','Register successfully! Please login.'
         );
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $credentials = $request->validate([
             'name' => 'required|string',
             'password' => 'required',
         ]);
 
-        if (!\App\Models\User::where('name', $credentials['name'])->exists()) {
+        $user = User::where('name',$credentials->name)->first();
+
+        if (!$user) {
             return back()->withErrors([
-                'name' => 'Tài khoản không tồn tại.',
+                'error' => 'Tài khoản không tồn tại.',
             ])->withInput();
         }
 

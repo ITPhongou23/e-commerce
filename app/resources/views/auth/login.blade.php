@@ -6,8 +6,8 @@
             @endforeach
         </div>
     @endif
-    <div class="flex min-h-[70vh] items-center justify-center px-4 mb-10">
-        <div class="w-full max-w-md rounded-2xl border border-gray-200 bg-blue-400 p-8 shadow-lg">
+    <div class="flex min-h-[70vh] items-center justify-center px-4 mb-20">
+        <div class="w-full max-w-md rounded-2xl border border-gray-200 bg-blue-400 p-8 shadow-lg py-10">
 
 
             {{-- Tiêu đề --}}

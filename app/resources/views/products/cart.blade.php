@@ -1,6 +1,13 @@
 <x-layout>
     <div class="min-h-screen bg-gray-100 py-10">
         <div class="mx-auto max-w-6xl px-4">
+            @if ($errors->any())
+                <div class="mb-4 rounded-lg bg-red-100 px-4 py-3 text-red-700">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <h1 class="mb-8 text-3xl font-bold text-gray-800">
                 Giỏ hàng
             </h1>
@@ -80,9 +87,7 @@
 
                     </div>
 
-                    {{-- Tổng tiền --}}
                     <div class="h-fit rounded-xl bg-white p-6 shadow-sm">
-
                         <h2 class="mb-6 text-xl font-bold text-gray-800">
                             Tổng đơn hàng
                         </h2>
@@ -110,14 +115,12 @@
                                 {{ number_format($total) }} ₫
                             </span>
                         </div>
-
-                        <button
-                            type="button"
-                            class="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
-                        >
-                            Tiến hành thanh toán
-                        </button>
-
+                        
+                        <div class="flex justify-between py-5">
+                            <a href="{{ route('buy') }}" class="w-full rounded-lg bg-blue-600 py-3 text-center font-semibold text-white hover:bg-blue-700">
+                                Tiến hành thanh toán
+                            </a>
+                        </div>
                     </div>
 
                 </div>
