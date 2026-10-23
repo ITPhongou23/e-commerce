@@ -122,12 +122,8 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
-
             @endif
-
         </div>
     </div>
-
 </x-layout>

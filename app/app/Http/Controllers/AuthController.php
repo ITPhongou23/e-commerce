@@ -46,7 +46,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('name',$credentials->name)->first();
+        $user = User::where('name', $credentials['name'])->first();
 
         if (!$user) {
             return back()->withErrors([

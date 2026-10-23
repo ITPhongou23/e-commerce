@@ -59,9 +59,7 @@ class CartController extends Controller
     }
 
     public function deleteToCart($cartId){
-        $cart = Cart::where('id', $cartId)
-            ->where('user_id', Auth::id())
-            ->first();
+        $cart = Cart::where('id', $cartId)->where('user_id', Auth::id())->first();
 
         if ($cart) {
             $cart->delete();
