@@ -60,3 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}/success', [OrderController::class, 'success'])->name('orders.success');
 });
+
+Route::get('/search',[ProductController::class, 'search']);
+Route::get('/filter',[ProductController::class, 'filter']);
+Route::get('/desc',[ProductController::class, 'desc']);
+Route::get('/asc',[ProductController::class, 'asc']);

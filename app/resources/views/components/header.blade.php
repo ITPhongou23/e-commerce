@@ -33,5 +33,11 @@
                 Đăng nhập
             </a>
         @endguest
+
+        @if (Request::is('/') or Str::contains(request()->path(), 'search') or Str::contains(request()->path(), 'filter'))
+            <form action="/search" methods="GET">
+                <input type="text" name="name" placeholder="Nhập tên sản phẩm..." class="rounded-2xl mr-2"/>
+            </form>
+        @endif
     </div>
 </div>

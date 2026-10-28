@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
 
         return view('index', [
             'products' => $products,
@@ -111,5 +111,33 @@ class ProductController extends Controller
         $product = Product::where('id', $productId)->first();
 
         return view('products.detail_product', compact('product'));
+    }
+
+    public function search(Request $request){
+        $name = $request->name;
+
+        $products = Product::where('name', 'LIKE', '%' . $name . '%')->paginate(10);
+        
+        return view('index', compact('products'));
+    }
+
+    public function filter(Request $request){
+        $name = $request->thuonghieu;
+       
+        $products = Product::where('name', 'LIKE','%'.$name.'%')->paginate(10);
+        
+        return view('index', compact('products'));
+    }
+
+    public function desc(){
+        $products = Product::orderBy('price','desc')->paginate(10);
+
+        return view('index', compact('products'));
+    }
+
+    public function asc(){
+        $products = Product::orderBy('price','asc')->paginate(10);
+
+        return view('index', compact('products'));
     }
 }
