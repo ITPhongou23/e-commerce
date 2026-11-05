@@ -34,9 +34,9 @@
             </a>
         @endguest
 
-        @if (Request::is('/') or Str::contains(request()->path(), 'search') or Str::contains(request()->path(), 'filter'))
+        @if (Request::is('/','*search*','*filter*','*asc*','*desc*'))
             <form action="/search" methods="GET">
-                <input type="text" name="name" placeholder="Nhập tên sản phẩm..." class="rounded-2xl mr-2"/>
+                <input type="text" name="name" placeholder="Nhập tên sản phẩm..." class=" border border-gray-300 rounded-2xl p-2 bg-white mr-2"/>
             </form>
         @endif
     </div>

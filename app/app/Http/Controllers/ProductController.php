@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Product;
+use App\Models\Review;
 use Cloudinary\Cloudinary;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use App\Models\Product;
-use App\Http\Controllers\CartController;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadToCloudinary($request->file('image'));
         } else {
-            unset($data['image']); 
+            unset($data['image']);
         }
 
         Product::create($data);
@@ -72,7 +73,7 @@ class ProductController extends Controller
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
-            'image' => ['nullable', 'image', 'max:2048'], 
+            'image' => ['nullable', 'image', 'max:2048'],
         ]);
     }
 
@@ -81,7 +82,7 @@ class ProductController extends Controller
         $cloudinary = new Cloudinary([
             'cloud' => [
                 'cloud_name' => config('services.cloudinary.cloud_name'),
-                'api_key'    => config('services.cloudinary.api_key'),
+                'api_key' => config('services.cloudinary.api_key'),
                 'api_secret' => config('services.cloudinary.api_secret'),
             ],
             'url' => ['secure' => true],
@@ -109,34 +110,40 @@ class ProductController extends Controller
     public function get_detail_product($productId)
     {
         $product = Product::where('id', $productId)->first();
+        $comments = Comment::where('product_id', $productId)->join('users', 'users.id', '=', 'user_id')->select('comments.*', 'users.name')->get();
+        $reviews = Review::where('product_id', $productId)->join('users', 'users.id', '=', 'user_id')->select('reviews.*', 'users.name')->get();
 
-        return view('products.detail_product', compact('product'));
+        return view('products.detail_product', compact('product', 'comments', 'reviews'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $name = $request->name;
 
-        $products = Product::where('name', 'LIKE', '%' . $name . '%')->paginate(10);
-        
+        $products = Product::where('name', 'LIKE', '%'.$name.'%')->paginate(10);
+
         return view('index', compact('products'));
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
         $name = $request->thuonghieu;
-       
-        $products = Product::where('name', 'LIKE','%'.$name.'%')->paginate(10);
-        
-        return view('index', compact('products'));
-    }
 
-    public function desc(){
-        $products = Product::orderBy('price','desc')->paginate(10);
+        $products = Product::where('name', 'LIKE', '%'.$name.'%')->paginate(10);
 
         return view('index', compact('products'));
     }
 
-    public function asc(){
-        $products = Product::orderBy('price','asc')->paginate(10);
+    public function desc()
+    {
+        $products = Product::orderBy('price', 'desc')->paginate(10);
+
+        return view('index', compact('products'));
+    }
+
+    public function asc()
+    {
+        $products = Product::orderBy('price', 'asc')->paginate(10);
 
         return view('index', compact('products'));
     }

@@ -32,9 +32,9 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'        => 'required|string|max:255',
-            'phone'       => 'required|string|max:20',
-            'address'     => 'required|string|max:500',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
             'description' => 'nullable|string|max:1000',
         ]);
 
@@ -48,28 +48,28 @@ class OrderController extends Controller
             $total = 0;
 
             $order = Order::create([
-                'user_id'     => auth()->id(),
-                'name'        => $data['name'],
-                'phone'       => $data['phone'],
-                'address'     => $data['address'],
+                'user_id' => auth()->id(),
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
                 'description' => $data['description'] ?? null,
-                'total'       => 0, 
+                'total' => 0,
             ]);
 
             foreach ($carts as $cart) {
                 $product = Product::lockForUpdate()->find($cart->product_id);
 
-                if (!$product || $product->stock < $cart->quantity) {
+                if (! $product || $product->stock < $cart->quantity) {
                     throw ValidationException::withMessages([
-                        'stock' => 'Sản phẩm "' . ($product->name ?? 'không tồn tại') . '" không đủ hàng.',
+                        'stock' => 'Sản phẩm "'.($product->name ?? 'không tồn tại').'" không đủ hàng.',
                     ]);
                 }
 
                 $order->items()->create([
                     'product_id' => $product->id,
-                    'name'       => $product->name,
-                    'quantity'   => $cart->quantity,
-                    'price'      => $product->price,
+                    'name' => $product->name,
+                    'quantity' => $cart->quantity,
+                    'price' => $product->price,
                 ]);
 
                 $product->decrement('stock', $cart->quantity);
@@ -86,7 +86,6 @@ class OrderController extends Controller
 
         return redirect()->route('orders.success', $order);
     }
-
 
     public function success(Order $order)
     {

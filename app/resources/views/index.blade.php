@@ -2,15 +2,17 @@
     <div class="min-h-screen">
         @if ($products->count())
             <div class="mt-2 ml-4 flex">
-                <form action="/filter" method="GET" >
-                    <select id="thuonghieu" name="thuonghieu" class="rounded-2xl" onchange="this.form.submit()">
-                        <option value="" disabled selected>-- Chọn thương hiệu --</option>
-                        <option value="iPhone">iPhone</option>
-                        <option value="Samsung">Samsung</option>
-                        <option value="Oppo">Oppo</option>
-                        <option value="Xiaomi">Xiaomi</option>
-                    </select>
-                </form>
+                <div class="border border-black-600 p-2 rounded-2xl shadow-2xl bg-green-300">
+                    <form action="/filter" method="GET" >
+                        <select id="thuonghieu" name="thuonghieu" class="rounded-2xl" onchange="this.form.submit()">
+                            <option value="" disabled selected>-- Chọn thương hiệu --</option>
+                            <option value="iPhone">iPhone</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Oppo">Oppo</option>
+                            <option value="Xiaomi">Xiaomi</option>
+                        </select>
+                    </form>
+                </div>
                 <form action="desc" method="GET">
                     <button class="border border-black-600 p-2 rounded-2xl ml-2 shadow-2xl bg-blue-400">
                         Giá giảm dần

@@ -1,1 +1,1 @@
-//
+import './review.js';

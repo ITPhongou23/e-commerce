@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string("phone")->nullable();
-            $table->string("adress")->nullable();
-            $table->text("description");
-            $table->unsignedBigInteger("total")->default(0);
+            $table->string('phone')->nullable();
+            $table->string('adress')->nullable();
+            $table->text('description');
+            $table->unsignedBigInteger('total')->default(0);
             $table->string('status')->default('pending');
             $table->timestamps();
         });
